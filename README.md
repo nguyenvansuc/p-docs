@@ -1,5 +1,74 @@
 # Hướng Dẫn Tích Hợp SEO React Plugin
 
+<style>
+  .seo-doc-callout {
+    margin: 12px 0;
+    border: 1px solid #d0d5dd;
+    border-left-width: 4px;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #344054;
+    padding: 10px 12px;
+  }
+
+  .seo-doc-callout--required {
+    border-color: #f79009;
+    background: #fffaeb;
+  }
+
+  .seo-doc-callout--dev {
+    border-color: #2e90fa;
+    background: #eff8ff;
+  }
+
+  .seo-doc-callout--success {
+    border-color: #12b76a;
+    background: #ecfdf3;
+  }
+
+  .seo-doc-badge {
+    display: inline-block;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+
+  .seo-doc-badge--required {
+    background: #fef0c7;
+    color: #b54708;
+  }
+
+  .seo-doc-badge--recommended {
+    background: #d1fadf;
+    color: #027a48;
+  }
+
+  .seo-doc-badge--optional {
+    background: #eef4ff;
+    color: #3538cd;
+  }
+
+  .seo-doc-badge--dev {
+    background: #d1e9ff;
+    color: #175cd3;
+  }
+
+  .seo-doc-badge--default {
+    background: #f2f4f7;
+    color: #475467;
+  }
+
+  .seo-doc-mark {
+    border-radius: 4px;
+    background: #fff2b8;
+    color: #344054;
+    padding: 1px 4px;
+  }
+</style>
+
 ## Tổng Quan
 
 SEO React Plugin là plugin giao diện dùng trong màn hình biên tập bài viết. Mục đích của plugin là hỗ trợ biên tập viên kiểm tra và tối ưu SEO trước khi xuất bản.
@@ -26,7 +95,7 @@ Plugin được build thành một file JavaScript và khai báo biến global:
   </button>
 </div>
 
-Lập trình viên tích hợp không cần biết phần React bên trong plugin. Chỉ cần hiểu cách truyền dữ liệu qua `source.get()` và `source.set(value)`.
+Lập trình viên tích hợp không cần biết phần React bên trong plugin. Chỉ cần hiểu cách truyền dữ liệu qua <mark class="seo-doc-mark"><code>source.get()</code></mark> và <mark class="seo-doc-mark"><code>source.set(value)</code></mark>.
 
 ## Cách Plugin Hoạt Động
 
@@ -58,6 +127,10 @@ Hệ thống tích hợp/editor
 
 ## Cài Đặt
 
+<div class="seo-doc-callout seo-doc-callout--required">
+  <strong>Bắt buộc:</strong> Trang tích hợp phải load đúng file script bên dưới trước khi gọi <code>mountSeoPlugin</code>.
+</div>
+
 Tải file bundle của plugin:
 
 <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
@@ -83,6 +156,10 @@ Sau khi tải script, biến global này phải tồn tại:
 </div>
 
 ## Tích Hợp Nhanh <button type="button" title="Sao chép mẫu tích hợp nhanh" aria-label="Sao chép mẫu tích hợp nhanh" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-quick').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+
+<div class="seo-doc-callout seo-doc-callout--dev">
+  <strong>Dev tích hợp cần sửa:</strong> các đoạn comment có chữ <code>Logic hệ thống tích hợp tự viết</code> là nơi thay bằng logic thật của hệ thống đang tích hợp.
+</div>
 
 Bấm icon copy bên cạnh tiêu đề để sao chép toàn bộ mẫu tích hợp, sau đó thay các phần có ghi chú `Logic hệ thống tích hợp tự viết` bằng logic thật của hệ thống.
 
@@ -224,32 +301,36 @@ editor.model.document.on("change:data", function () {
 
 | Dữ liệu đầu vào | Bắt buộc | Mục đích |
 | --- | --- | --- |
-| `source.html.get()` | Có | Lấy HTML bài viết để chấm nội dung, heading, link và ảnh |
-| `source.title.get()` | Nên có | Lấy tiêu đề SEO để chấm nhóm tiêu đề |
-| `source.keyword.get()` | Nên có | Lấy từ khóa chủ đạo để chấm keyword |
-| `source.description.get()` | Nên có | Lấy mô tả SEO để chấm nhóm mô tả |
-| `source.tags.get()` | Không | Lấy tags hiện tại |
-| `config.domain` | Không | Phân biệt link nội bộ và link ngoài |
-| `config.ruleConfig` | Không | Bật/tắt rule và chỉnh ngưỡng chấm điểm |
-| `config.ui` | Không | Ẩn/hiện một số phần giao diện |
+| `source.html.get()` | <span class="seo-doc-badge seo-doc-badge--required">Bắt buộc</span> | Lấy HTML bài viết để chấm nội dung, heading, link và ảnh |
+| `source.title.get()` | <span class="seo-doc-badge seo-doc-badge--recommended">Nên có</span> | Lấy tiêu đề SEO để chấm nhóm tiêu đề |
+| `source.keyword.get()` | <span class="seo-doc-badge seo-doc-badge--recommended">Nên có</span> | Lấy từ khóa chủ đạo để chấm keyword |
+| `source.description.get()` | <span class="seo-doc-badge seo-doc-badge--recommended">Nên có</span> | Lấy mô tả SEO để chấm nhóm mô tả |
+| `source.tags.get()` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Lấy tags hiện tại |
+| `config.domain` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Phân biệt link nội bộ và link ngoài |
+| `config.ruleConfig` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Bật/tắt rule và chỉnh ngưỡng chấm điểm |
+| `config.ui` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Ẩn/hiện một số phần giao diện |
 
 ### Lập trình viên tích hợp phải viết gì?
 
 | Phần cần viết | Khi nào cần | Mục đích |
 | --- | --- | --- |
-| `source.html.get` | Luôn nên có | Trả HTML hiện tại từ editor |
-| `source.title.get/set` | Khi có tiêu đề SEO | Đọc/ghi tiêu đề SEO |
-| `source.keyword.get/set` | Khi có từ khóa chủ đạo | Đọc/ghi từ khóa chủ đạo |
-| `source.description.get/set` | Khi có mô tả SEO | Đọc/ghi mô tả SEO |
-| `source.tags.get/set` | Khi bật field tags | Đọc/ghi tags |
-| `source.syncCorrectImageAlt.set` | Khi dùng tính năng sửa alt ảnh | Ghi HTML đã sửa alt vào editor |
-| `config.api.getFieldSuggestions` | Khi muốn có gợi ý AI | Trả gợi ý keyword/title/description/tags |
-| `config.api.searchTags` | Khi muốn tìm kiếm tags | Trả danh sách tag theo từ khóa tìm kiếm |
-| Listener gọi `refresh()` | Luôn nên có | Báo plugin đọc lại dữ liệu khi editor/form đổi |
+| `source.html.get` | <span class="seo-doc-badge seo-doc-badge--required">Luôn cần</span> | Trả HTML hiện tại từ editor |
+| `source.title.get/set` | <span class="seo-doc-badge seo-doc-badge--dev">Dev tự viết</span> | Đọc/ghi tiêu đề SEO |
+| `source.keyword.get/set` | <span class="seo-doc-badge seo-doc-badge--dev">Dev tự viết</span> | Đọc/ghi từ khóa chủ đạo |
+| `source.description.get/set` | <span class="seo-doc-badge seo-doc-badge--dev">Dev tự viết</span> | Đọc/ghi mô tả SEO |
+| `source.tags.get/set` | <span class="seo-doc-badge seo-doc-badge--optional">Khi dùng tags</span> | Đọc/ghi tags |
+| `source.syncCorrectImageAlt.set` | <span class="seo-doc-badge seo-doc-badge--optional">Khi sửa alt ảnh</span> | Ghi HTML đã sửa alt vào editor |
+| `config.api.getFieldSuggestions` | <span class="seo-doc-badge seo-doc-badge--optional">Khi dùng AI</span> | Trả gợi ý keyword/title/description/tags |
+| `config.api.searchTags` | <span class="seo-doc-badge seo-doc-badge--optional">Khi tìm tags</span> | Trả danh sách tag theo từ khóa tìm kiếm |
+| Listener gọi `refresh()` | <span class="seo-doc-badge seo-doc-badge--required">Luôn cần</span> | Báo plugin đọc lại dữ liệu khi editor/form đổi |
 
 ## API Chính
 
 ### `mountSeoPlugin(options)`
+
+<div class="seo-doc-callout seo-doc-callout--required">
+  <strong>Điểm bắt đầu:</strong> mọi tích hợp đều bắt đầu bằng lệnh <code>window.SeoEditorPluginIframe.mountSeoPlugin({ ... })</code>.
+</div>
 
 Gọi trực tiếp bằng object cấu hình:
 
@@ -298,6 +379,10 @@ window.SeoEditorPluginIframe.mountSeoPlugin({
 ```
 
 ### `config.source`
+
+<div class="seo-doc-callout seo-doc-callout--required">
+  <strong>Quan trọng nhất:</strong> <code>source</code> là hợp đồng đọc/ghi dữ liệu giữa plugin và hệ thống tích hợp.
+</div>
 
 `source` là giao ước quan trọng nhất. Đây là nơi plugin đọc và ghi dữ liệu.
 
@@ -730,6 +815,10 @@ ui: {
 ```
 
 ## Rule Config
+
+<div class="seo-doc-callout seo-doc-callout--success">
+  <strong>Có thể bỏ qua lúc tích hợp lần đầu:</strong> nếu không truyền <code>ruleConfig</code>, plugin sẽ dùng các giá trị default trong bảng bên dưới.
+</div>
 
 `ruleConfig` gồm 2 phần:
 
