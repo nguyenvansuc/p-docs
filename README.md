@@ -783,6 +783,55 @@ var ruleConfig = {
 };
 ```
 
+### Ý nghĩa `settings`
+
+`settings` dùng để chỉnh cách plugin chấm điểm. Các field dạng `ignore...` thường dùng khi hệ thống muốn bỏ qua một nhóm rule cũ hoặc một nhóm rule không áp dụng cho màn hình hiện tại.
+
+| Trường | Ý nghĩa |
+| --- | --- |
+| `ignoreCharacters` | Bỏ qua rule đếm số ký tự của title và description. Khi `true`, plugin sẽ không chấm `TITLE_CHARACTERS` và `DESCRIPTION_CHARACTERS`, trừ khi bạn bật/tắt trực tiếp trong `criteria`. |
+| `ignoreSeoHeading` | Bỏ qua toàn bộ nhóm heading SEO, gồm H2 và H3-H6. Dùng khi màn hình không muốn chấm heading. |
+| `maxWordsOfTitle` | Số từ tối đa cho title SEO. Rule `TITLE_WORDS` dùng giá trị này để chấm title quá dài hay hợp lệ. |
+| `maxWordsOfSapo` | Số từ tối đa cho description SEO. Rule `DESCRIPTION_WORDS` dùng giá trị này để chấm mô tả quá dài hay hợp lệ. |
+| `ignoreTooLongSentences` | Bỏ qua rule tỷ lệ câu dài hơn 20 từ. |
+| `ignoreExternalLinks` | Bỏ qua rule kiểm tra link ra ngoài. |
+| `ignoreCheckmissingAlt` | Bỏ qua rule kiểm tra ảnh thiếu alt. |
+| `ignorePercentTransitionWord` | Bỏ qua rule tỷ lệ câu có từ chuyển tiếp. |
+| `ignoreKeywordInAlt` | Bỏ qua rule alt ảnh có chứa từ khóa chủ đạo hay không. |
+| `ignorePercentKeywordCount` | Field giữ để tương thích luồng cũ. Hiện rule mật độ từ khóa nên bật/tắt bằng `criteria.CONTENT_PERCENT_KEYWORD`. |
+| `ignoreHeadingH3ToH6` | Bỏ qua 2 rule liên quan đến heading H3-H6. |
+| `usePercentKeywordCount` | Khi `true`, rule `CONTENT_KEYWORD` dùng mật độ từ khóa theo phần trăm thay vì số lần xuất hiện. |
+
+### Ý nghĩa `criteria`
+
+`criteria` dùng để bật/tắt từng tiêu chí chấm điểm. Nếu set một key là `false`, tiêu chí đó không hiển thị và không được tính vào điểm SEO.
+
+| Tiêu chí | Ý nghĩa |
+| --- | --- |
+| `TITLE_KEYWORD` | Kiểm tra title SEO có chứa từ khóa chủ đạo hay không. |
+| `TITLE_WORDS` | Kiểm tra số từ của title SEO có nằm trong ngưỡng hợp lệ không. Ngưỡng tối đa lấy từ `settings.maxWordsOfTitle`. |
+| `TITLE_CHARACTERS` | Kiểm tra số ký tự của title SEO có nằm trong khoảng tối ưu không. |
+| `DESCRIPTION_KEYWORD` | Kiểm tra description SEO có chứa từ khóa chủ đạo hay không. |
+| `DESCRIPTION_WORDS` | Kiểm tra số từ của description SEO có nằm trong ngưỡng hợp lệ không. Ngưỡng tối đa lấy từ `settings.maxWordsOfSapo`. |
+| `DESCRIPTION_CHARACTERS` | Kiểm tra số ký tự của description SEO có nằm trong khoảng tối ưu không. |
+| `HEADING_H2_EXISTS` | Kiểm tra bài viết có ít nhất một thẻ H2 hay không. |
+| `HEADING_H2_KEYWORD` | Kiểm tra từ khóa chủ đạo có xuất hiện trong H2 hay không. |
+| `HEADING_H3_H6_EXISTS` | Kiểm tra bài viết có thẻ H3 đến H6 hay không. |
+| `HEADING_H3_H6_KEYWORD` | Kiểm tra từ khóa chủ đạo có xuất hiện trong H3 đến H6 hay không. |
+| `PRIMARY_KEYWORD_EXISTS` | Kiểm tra người dùng đã nhập từ khóa chủ đạo hay chưa. |
+| `CONTENT_FIRST_PARAGRAPH_KEYWORD` | Kiểm tra đoạn đầu tiên của bài viết có chứa từ khóa chủ đạo hay không. |
+| `CONTENT_KEYWORD` | Kiểm tra từ khóa chủ đạo có xuất hiện trong nội dung hay không. |
+| `CONTENT_PERCENT_KEYWORD` | Kiểm tra mật độ từ khóa có nằm trong khoảng 1% đến 5% hay không. Mức 3% là tối ưu nhất. |
+| `CONTENT_WORD_COUNT` | Kiểm tra nội dung có đạt tối thiểu 300 từ hay không. |
+| `CONTENT_PARAGRAPH_LENGTH` | Kiểm tra bài viết có đoạn văn nào dài quá 300 từ hay không. |
+| `CONTENT_LONG_SENTENCES` | Kiểm tra tỷ lệ câu dài hơn 20 từ có vượt 25% hay không. |
+| `CONTENT_TRANSITION_WORD` | Kiểm tra tỷ lệ câu có từ chuyển tiếp có đạt 30% hay không. |
+| `CONTENT_INTERNAL_LINK` | Kiểm tra bài viết có link nội bộ hay không. |
+| `CONTENT_EXTERNAL_LINK` | Kiểm tra bài viết có link ra ngoài hay không. |
+| `CONTENT_IMAGE_EXISTS` | Kiểm tra bài viết có hình ảnh hay không. |
+| `CONTENT_IMAGE_ALT` | Kiểm tra tất cả hình ảnh có alt hay không. Nếu bật tính năng đồng bộ alt, cần thêm `source.syncCorrectImageAlt.set(html)`. |
+| `CONTENT_KEYWORD_IN_ALT` | Kiểm tra alt ảnh có chứa từ khóa chủ đạo hay không. |
+
 Ghi nhớ:
 
 - `criteria.KEY = false` nghĩa là rule đó không hiển thị và không tính điểm.
