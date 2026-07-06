@@ -1,73 +1,5 @@
 # Hướng Dẫn Tích Hợp SEO React Plugin
 
-<style>
-  .seo-doc-callout {
-    margin: 12px 0;
-    border: 1px solid #d0d5dd;
-    border-left-width: 4px;
-    border-radius: 8px;
-    background: #f8fafc;
-    color: #344054;
-    padding: 10px 12px;
-  }
-
-  .seo-doc-callout--required {
-    border-color: #f79009;
-    background: #fffaeb;
-  }
-
-  .seo-doc-callout--dev {
-    border-color: #2e90fa;
-    background: #eff8ff;
-  }
-
-  .seo-doc-callout--success {
-    border-color: #12b76a;
-    background: #ecfdf3;
-  }
-
-  .seo-doc-badge {
-    display: inline-block;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1;
-    padding: 4px 8px;
-    white-space: nowrap;
-  }
-
-  .seo-doc-badge--required {
-    background: #fef0c7;
-    color: #b54708;
-  }
-
-  .seo-doc-badge--recommended {
-    background: #d1fadf;
-    color: #027a48;
-  }
-
-  .seo-doc-badge--optional {
-    background: #eef4ff;
-    color: #3538cd;
-  }
-
-  .seo-doc-badge--dev {
-    background: #d1e9ff;
-    color: #175cd3;
-  }
-
-  .seo-doc-badge--default {
-    background: #f2f4f7;
-    color: #475467;
-  }
-
-  .seo-doc-mark {
-    border-radius: 4px;
-    background: #fff2b8;
-    color: #344054;
-    padding: 1px 4px;
-  }
-</style>
 
 ## Tổng Quan
 
@@ -85,17 +17,11 @@ Plugin phục vụ các tính năng chính:
 
 Plugin được build thành một file JavaScript và khai báo biến global:
 
-<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-  <code id="seo-plugin-copy-mount-api">window.SeoEditorPluginIframe.mountSeoPlugin(options)</code>
-  <button type="button" title="Sao chép hàm mount" aria-label="Sao chép hàm mount" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-mount-api').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;">
-      <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
-      <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-  </button>
-</div>
+```js
+window.SeoEditorPluginIframe.mountSeoPlugin(options)
+```
 
-Lập trình viên tích hợp không cần biết phần React bên trong plugin. Chỉ cần hiểu cách truyền dữ liệu qua <mark class="seo-doc-mark"><code>source.get()</code></mark> và <mark class="seo-doc-mark"><code>source.set(value)</code></mark>.
+Lập trình viên tích hợp không cần biết phần React bên trong plugin. Chỉ cần hiểu cách truyền dữ liệu qua `source.get()` và `source.set(value)`.
 
 ## Cách Plugin Hoạt Động
 
@@ -127,46 +53,33 @@ Hệ thống tích hợp/editor
 
 ## Cài Đặt
 
-<div class="seo-doc-callout seo-doc-callout--required">
-  <strong>Bắt buộc:</strong> Trang tích hợp phải load đúng file script bên dưới trước khi gọi <code>mountSeoPlugin</code>.
-</div>
+> [!IMPORTANT]
+> Trang tích hợp phải load đúng file script bên dưới trước khi gọi `mountSeoPlugin`.
 
 Tải file bundle của plugin:
 
-<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-  <code id="seo-plugin-copy-script">&lt;script src="https://ims.mediacdn.vn/plugins/seo/seo-plugin-react.min.js"&gt;&lt;/script&gt;</code>
-  <button type="button" title="Sao chép script" aria-label="Sao chép script" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-script').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;">
-      <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
-      <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-  </button>
-</div>
+```html
+<script src="https://ims.mediacdn.vn/plugins/seo/seo-plugin-react.min.js"></script>
+```
 
 Sau khi tải script, biến global này phải tồn tại:
 
-<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-  <code id="seo-plugin-copy-global">window.SeoEditorPluginIframe</code>
-  <button type="button" title="Sao chép biến global" aria-label="Sao chép biến global" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-global').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;">
-      <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
-      <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-  </button>
-</div>
+```js
+window.SeoEditorPluginIframe
+```
 
-## Tích Hợp Nhanh <button type="button" title="Sao chép mẫu tích hợp nhanh" aria-label="Sao chép mẫu tích hợp nhanh" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-quick').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+## Tích Hợp Nhanh
 
-<div class="seo-doc-callout seo-doc-callout--dev">
-  <strong>Dev tích hợp cần sửa:</strong> các đoạn comment có chữ <code>Logic hệ thống tích hợp tự viết</code> là nơi thay bằng logic thật của hệ thống đang tích hợp.
-</div>
+> [!NOTE]
+> Các đoạn comment có chữ `Logic hệ thống tích hợp tự viết` là nơi dev thay bằng logic thật của hệ thống đang tích hợp.
 
-Bấm icon copy bên cạnh tiêu đề để sao chép toàn bộ mẫu tích hợp, sau đó thay các phần có ghi chú `Logic hệ thống tích hợp tự viết` bằng logic thật của hệ thống.
+Copy toàn bộ mẫu tích hợp, sau đó thay các phần có ghi chú `Logic hệ thống tích hợp tự viết` bằng logic thật của hệ thống.
 
-<pre id="seo-plugin-copy-quick"><code>&lt;div id="seo-panel"&gt;&lt;/div&gt;
+```html
+<div id="seo-panel"></div>
 
-&lt;script src="https://ims.mediacdn.vn/plugins/seo/seo-plugin-react.min.js"&gt;&lt;/script&gt;
-&lt;script&gt;
+<script src="https://ims.mediacdn.vn/plugins/seo/seo-plugin-react.min.js"></script>
+<script>
   // Logic hệ thống tích hợp tự viết: nơi lưu dữ liệu SEO thật.
   var seoData = {
     title: "",
@@ -221,23 +134,18 @@ Bấm icon copy bên cạnh tiêu đề để sao chép toàn bộ mẫu tích h
   editor.model.document.on("change:data", function () {
     instance.refresh();
   });
-&lt;/script&gt;</code></pre>
+</script>
+```
 
 ## Ví Dụ Tối Thiểu
 
 HTML:
 
-<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-  <code id="seo-plugin-copy-panel">&lt;div id="seo-panel"&gt;&lt;/div&gt;</code>
-  <button type="button" title="Sao chép HTML" aria-label="Sao chép HTML" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-panel').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;">
-      <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
-      <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-  </button>
-</div>
+```html
+<div id="seo-panel"></div>
+```
 
-JavaScript <button type="button" title="Sao chép JavaScript" aria-label="Sao chép JavaScript" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>:
+JavaScript:
 
 ```js
 // Logic hệ thống tích hợp tự viết: nơi lưu dữ liệu SEO thật của bài viết.
@@ -301,36 +209,35 @@ editor.model.document.on("change:data", function () {
 
 | Dữ liệu đầu vào | Bắt buộc | Mục đích |
 | --- | --- | --- |
-| `source.html.get()` | <span class="seo-doc-badge seo-doc-badge--required">Bắt buộc</span> | Lấy HTML bài viết để chấm nội dung, heading, link và ảnh |
-| `source.title.get()` | <span class="seo-doc-badge seo-doc-badge--recommended">Nên có</span> | Lấy tiêu đề SEO để chấm nhóm tiêu đề |
-| `source.keyword.get()` | <span class="seo-doc-badge seo-doc-badge--recommended">Nên có</span> | Lấy từ khóa chủ đạo để chấm keyword |
-| `source.description.get()` | <span class="seo-doc-badge seo-doc-badge--recommended">Nên có</span> | Lấy mô tả SEO để chấm nhóm mô tả |
-| `source.tags.get()` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Lấy tags hiện tại |
-| `config.domain` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Phân biệt link nội bộ và link ngoài |
-| `config.ruleConfig` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Bật/tắt rule và chỉnh ngưỡng chấm điểm |
-| `config.ui` | <span class="seo-doc-badge seo-doc-badge--optional">Tuỳ chọn</span> | Ẩn/hiện một số phần giao diện |
+| `source.html.get()` | **Bắt buộc** | Lấy HTML bài viết để chấm nội dung, heading, link và ảnh |
+| `source.title.get()` | **Nên có** | Lấy tiêu đề SEO để chấm nhóm tiêu đề |
+| `source.keyword.get()` | **Nên có** | Lấy từ khóa chủ đạo để chấm keyword |
+| `source.description.get()` | **Nên có** | Lấy mô tả SEO để chấm nhóm mô tả |
+| `source.tags.get()` | **Tuỳ chọn** | Lấy tags hiện tại |
+| `config.domain` | **Tuỳ chọn** | Phân biệt link nội bộ và link ngoài |
+| `config.ruleConfig` | **Tuỳ chọn** | Bật/tắt rule và chỉnh ngưỡng chấm điểm |
+| `config.ui` | **Tuỳ chọn** | Ẩn/hiện một số phần giao diện |
 
 ### Lập trình viên tích hợp phải viết gì?
 
 | Phần cần viết | Khi nào cần | Mục đích |
 | --- | --- | --- |
-| `source.html.get` | <span class="seo-doc-badge seo-doc-badge--required">Luôn cần</span> | Trả HTML hiện tại từ editor |
-| `source.title.get/set` | <span class="seo-doc-badge seo-doc-badge--dev">Dev tự viết</span> | Đọc/ghi tiêu đề SEO |
-| `source.keyword.get/set` | <span class="seo-doc-badge seo-doc-badge--dev">Dev tự viết</span> | Đọc/ghi từ khóa chủ đạo |
-| `source.description.get/set` | <span class="seo-doc-badge seo-doc-badge--dev">Dev tự viết</span> | Đọc/ghi mô tả SEO |
-| `source.tags.get/set` | <span class="seo-doc-badge seo-doc-badge--optional">Khi dùng tags</span> | Đọc/ghi tags |
-| `source.syncCorrectImageAlt.set` | <span class="seo-doc-badge seo-doc-badge--optional">Khi sửa alt ảnh</span> | Ghi HTML đã sửa alt vào editor |
-| `config.api.getFieldSuggestions` | <span class="seo-doc-badge seo-doc-badge--optional">Khi dùng AI</span> | Trả gợi ý keyword/title/description/tags |
-| `config.api.searchTags` | <span class="seo-doc-badge seo-doc-badge--optional">Khi tìm tags</span> | Trả danh sách tag theo từ khóa tìm kiếm |
-| Listener gọi `refresh()` | <span class="seo-doc-badge seo-doc-badge--required">Luôn cần</span> | Báo plugin đọc lại dữ liệu khi editor/form đổi |
+| `source.html.get` | **Luôn cần** | Trả HTML hiện tại từ editor |
+| `source.title.get/set` | **Dev tự viết** | Đọc/ghi tiêu đề SEO |
+| `source.keyword.get/set` | **Dev tự viết** | Đọc/ghi từ khóa chủ đạo |
+| `source.description.get/set` | **Dev tự viết** | Đọc/ghi mô tả SEO |
+| `source.tags.get/set` | **Khi dùng tags** | Đọc/ghi tags |
+| `source.syncCorrectImageAlt.set` | **Khi sửa alt ảnh** | Ghi HTML đã sửa alt vào editor |
+| `config.api.getFieldSuggestions` | **Khi dùng AI** | Trả gợi ý keyword/title/description/tags |
+| `config.api.searchTags` | **Khi tìm tags** | Trả danh sách tag theo từ khóa tìm kiếm |
+| Listener gọi `refresh()` | **Luôn cần** | Báo plugin đọc lại dữ liệu khi editor/form đổi |
 
 ## API Chính
 
 ### `mountSeoPlugin(options)`
 
-<div class="seo-doc-callout seo-doc-callout--required">
-  <strong>Điểm bắt đầu:</strong> mọi tích hợp đều bắt đầu bằng lệnh <code>window.SeoEditorPluginIframe.mountSeoPlugin({ ... })</code>.
-</div>
+> [!IMPORTANT]
+> Mọi tích hợp đều bắt đầu bằng lệnh `window.SeoEditorPluginIframe.mountSeoPlugin({ ... })`.
 
 Gọi trực tiếp bằng object cấu hình:
 
@@ -380,9 +287,8 @@ window.SeoEditorPluginIframe.mountSeoPlugin({
 
 ### `config.source`
 
-<div class="seo-doc-callout seo-doc-callout--required">
-  <strong>Quan trọng nhất:</strong> <code>source</code> là hợp đồng đọc/ghi dữ liệu giữa plugin và hệ thống tích hợp.
-</div>
+> [!IMPORTANT]
+> `source` là hợp đồng đọc/ghi dữ liệu giữa plugin và hệ thống tích hợp.
 
 `source` là giao ước quan trọng nhất. Đây là nơi plugin đọc và ghi dữ liệu.
 
@@ -437,6 +343,108 @@ var source = {
 ```
 
 Nếu thiếu field, plugin hiểu giá trị field đó là rỗng. Nếu thiếu `set`, plugin vẫn hiển thị nhưng không thể ghi ngược field đó khi người dùng áp dụng gợi ý.
+
+### Option 1: Tích hợp bằng state/model của hệ thống
+
+Dùng cách này khi hệ thống đang lưu dữ liệu SEO trong biến, state, store hoặc model bài viết.
+
+```js
+var seoData = {
+  title: "",
+  keyword: "",
+  description: "",
+  tags: [],
+};
+
+var source = {
+  html: {
+    get: function () {
+      return editor.getData();
+    },
+  },
+  title: {
+    get: function () {
+      return seoData.title;
+    },
+    set: function (value) {
+      seoData.title = value || "";
+    },
+  },
+  keyword: {
+    get: function () {
+      return seoData.keyword;
+    },
+    set: function (value) {
+      seoData.keyword = value || "";
+    },
+  },
+  description: {
+    get: function () {
+      return seoData.description;
+    },
+    set: function (value) {
+      seoData.description = value || "";
+    },
+  },
+};
+```
+
+### Option 2: Tích hợp bằng field/form DOM có sẵn
+
+Dùng cách này khi màn hình đã có sẵn các field như `input`, `textarea`, hoặc field SEO riêng của CMS.
+
+> [!NOTE]
+> Plugin hiện không nhận trực tiếp `HTMLElement` kiểu `title: document.querySelector("#title")`. Dev tích hợp cần bọc DOM field bằng `get()` và `set(value)` như ví dụ bên dưới.
+
+```js
+var fields = {
+  title: document.querySelector("#seo-title"),
+  keyword: document.querySelector("#seo-keyword"),
+  description: document.querySelector("#seo-description"),
+  content: document.querySelector("#content"),
+};
+
+var source = {
+  html: {
+    get: function () {
+      return fields.content.value || "";
+    },
+  },
+  title: {
+    get: function () {
+      return fields.title.value || "";
+    },
+    set: function (value) {
+      fields.title.value = value || "";
+      onSeoFieldChanged();
+    },
+  },
+  keyword: {
+    get: function () {
+      return fields.keyword.value || "";
+    },
+    set: function (value) {
+      fields.keyword.value = value || "";
+      onSeoFieldChanged();
+    },
+  },
+  description: {
+    get: function () {
+      return fields.description.value || "";
+    },
+    set: function (value) {
+      fields.description.value = value || "";
+      onSeoFieldChanged();
+    },
+  },
+};
+
+function onSeoFieldChanged() {
+  // Logic hệ thống tích hợp tự viết:
+  // cập nhật model/state thật nếu cần, sau đó báo plugin đọc lại dữ liệu.
+  instance.refresh();
+}
+```
 
 ### `config.api`
 
@@ -816,9 +824,8 @@ ui: {
 
 ## Rule Config
 
-<div class="seo-doc-callout seo-doc-callout--success">
-  <strong>Có thể bỏ qua lúc tích hợp lần đầu:</strong> nếu không truyền <code>ruleConfig</code>, plugin sẽ dùng các giá trị default trong bảng bên dưới.
-</div>
+> [!NOTE]
+> Có thể bỏ qua `ruleConfig` lúc tích hợp lần đầu. Nếu không truyền `ruleConfig`, plugin sẽ dùng các giá trị default trong bảng bên dưới.
 
 `ruleConfig` gồm 2 phần:
 
@@ -931,27 +938,15 @@ Ghi nhớ:
 
 ### Bước 1: Thêm vị trí render plugin
 
-<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-  <code id="seo-plugin-copy-step-panel">&lt;aside id="seo-panel"&gt;&lt;/aside&gt;</code>
-  <button type="button" title="Sao chép vị trí render" aria-label="Sao chép vị trí render" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-step-panel').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;">
-      <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
-      <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-  </button>
-</div>
+```html
+<aside id="seo-panel"></aside>
+```
 
 ### Bước 2: Tải script plugin
 
-<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-  <code id="seo-plugin-copy-step-script">&lt;script src="https://ims.mediacdn.vn/plugins/seo/seo-plugin-react.min.js"&gt;&lt;/script&gt;</code>
-  <button type="button" title="Sao chép script" aria-label="Sao chép script" onclick="navigator.clipboard.writeText(document.getElementById('seo-plugin-copy-step-script').innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;">
-      <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect>
-      <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-  </button>
-</div>
+```html
+<script src="https://ims.mediacdn.vn/plugins/seo/seo-plugin-react.min.js"></script>
+```
 
 ### Bước 3: Chuẩn bị `source`
 
@@ -1027,7 +1022,7 @@ function onSeoFormChanged() {
 instance.destroy();
 ```
 
-## Ví Dụ CKEditor <button type="button" title="Sao chép ví dụ CKEditor" aria-label="Sao chép ví dụ CKEditor" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+## Ví Dụ CKEditor
 
 ```html
 <div id="seo-panel"></div>
@@ -1113,7 +1108,7 @@ instance.destroy();
 </script>
 ```
 
-## Ví Dụ Quill <button type="button" title="Sao chép ví dụ Quill" aria-label="Sao chép ví dụ Quill" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+## Ví Dụ Quill
 
 ```js
 // Logic hệ thống tích hợp tự viết: khởi tạo Quill.
@@ -1170,7 +1165,7 @@ quill.on("text-change", function () {
 });
 ```
 
-## Ví Dụ React State <button type="button" title="Sao chép ví dụ React State" aria-label="Sao chép ví dụ React State" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+## Ví Dụ React State
 
 ```jsx
 import { useEffect, useRef, useState } from "react";
@@ -1433,7 +1428,7 @@ Trước khi coi là tích hợp xong, kiểm tra:
 - `config.domain` được truyền nếu cần check link nội bộ/link ngoài chính xác.
 - `instance.destroy()` được gọi khi màn hình tích hợp unmount.
 
-## Mẫu Ngắn Nhất Để Copy <button type="button" title="Sao chép mẫu ngắn nhất" aria-label="Sao chép mẫu ngắn nhất" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim())" style="border:0;background:transparent;color:#344054;cursor:pointer;padding:0 4px;vertical-align:middle;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:text-bottom;"><rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+## Mẫu Ngắn Nhất Để Copy
 
 ```js
 var source = {
